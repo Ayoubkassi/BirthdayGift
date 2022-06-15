@@ -37,28 +37,37 @@ print(begin_time)
 
 
 def getUrl(name):
-    webdriver.Chrome().get("https://images.google.com/")
+    browser = webdriver.Chrome()
+    browser.get("https://images.google.com/")
     sleep(2)
-    login_field = webdriver.Chrome().find_element_by_xpath(
-        '//*[@id="sbtc"]/div/div[2]/input').send_keys(name+" image size : 886x1920")
-    next_butt = webdriver.Chrome().find_element_by_xpath(
+    login_field = browser.find_element_by_xpath(
+        '//*[@id="sbtc"]/div/div[2]/input').send_keys(name)
+    next_butt = browser.find_element_by_xpath(
         '//*[@id="sbtc"]/button').click()
 
     pyautogui.moveTo(200, 510, duration = 1)
     pyautogui.click()
-    sleep(1)
+    sleep(5)
     pyautogui.moveTo(800, 510, duration = 1)
-    sleep(3)
+    sleep(2)
     pyautogui.click(button='right')
     pyautogui.press('up', presses=3)
     pyautogui.press('enter')
     url =  pyperclip.paste()
+    browser.close()
     return url
 
 
 #get all necessary links
 for item in values:
     items[item] = getUrl(item)
+
+f = open("data3.txt", "a")
+for key,value in items.items():
+    text = key + "->" + value
+    f.write(text)
+    f.write("\n\n\n\n")
+f.close()
 
 
 # class BirthdayGift:
