@@ -6,12 +6,17 @@ import subprocess
 import shlex
 import pyautogui
 import pyperclip
+import requests
+import shutil
+
 
 values = []
 items= {}
 
 # music = input("Enter ur favourite music : ")
 # values.append(music)
+#get user data
+
 food = input("Enter ur favourite food : ")
 values.append(food)
 movie = input("Enter ur favourite movie  : ")
@@ -45,10 +50,10 @@ def getUrl(name):
     next_butt = browser.find_element_by_xpath(
         '//*[@id="sbtc"]/button').click()
 
-    pyautogui.moveTo(200, 510, duration = 1)
+    pyautogui.moveTo(200, 500, duration = 1)
     pyautogui.click()
-    sleep(5)
-    pyautogui.moveTo(800, 510, duration = 1)
+    sleep(6)
+    pyautogui.moveTo(800, 500, duration = 1)
     sleep(2)
     pyautogui.click(button='right')
     pyautogui.press('up', presses=3)
@@ -62,12 +67,23 @@ def getUrl(name):
 for item in values:
     items[item] = getUrl(item)
 
-f = open("data3.txt", "a")
+f = open("hiba.txt", "a")
 for key,value in items.items():
     text = key + "->" + value
     f.write(text)
     f.write("\n\n\n\n")
 f.close()
+
+
+
+#download images
+for key,value in items.items():
+    response = requests.get(value)
+    name = key+".png"
+    file = open(name, "wb")
+    file.write(response.content)
+    file.close()
+
 
 
 # class BirthdayGift:
